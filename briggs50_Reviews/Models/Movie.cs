@@ -18,7 +18,6 @@ namespace briggs50_Reviews.Models
 
         [Display(Name = "ReleaseDate")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{yyyy}", ApplyFormatInEditMode = true)]
         public int Year { get; set; }
 
         [Required]

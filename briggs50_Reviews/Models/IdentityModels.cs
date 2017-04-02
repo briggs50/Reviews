@@ -31,5 +31,7 @@ namespace briggs50_Reviews.Models
         }
 
         public System.Data.Entity.DbSet<briggs50_Reviews.Models.Movie> Movies { get; set; }
+
+        public System.Data.Entity.DbSet<briggs50_Reviews.Models.Review> Reviews { get; set; }
     }
 }
