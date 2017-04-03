@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 
 namespace briggs_Reviews.Models
 {
+    // XML Stuff
     [XmlRoot("Movies")]
     public class Movies
     {
