@@ -26,5 +26,12 @@ namespace briggs_Reviews.Controllers
 
             return View();
         }
+
+        public ActionResult Admin()
+        {
+            ViewBag.Message = "Your admin page.";
+
+            return View();
+        }
     }
 }
