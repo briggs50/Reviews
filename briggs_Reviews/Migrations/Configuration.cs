@@ -69,20 +69,7 @@ namespace briggs_Reviews.Migrations
                        Rating = MovieRating.A
                    }
                  );
-            context.Reviews.AddOrUpdate(b => b.MovieTitle,
-            new Review
-            {
-                MovieTitle = "Hidden Figures",
-                Content = "I absolutely loved this movie! Very empowering for women in STEM fields!",
-                Rating = MovieRating.A
-            },
-            new Review
-            {
-                MovieTitle = "American Sniper",
-                Content = "Honestly, not my favorite movie. IT was too intense for me to watch",
-                Rating = MovieRating.C
-            }
-            );
+           
         }
     }
 }

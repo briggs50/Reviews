@@ -1,0 +1,23 @@
+﻿@model IEnumerable<briggs_Reviews.Models.Movie>
+@{
+    ViewBag.Title = "ListMoves";
+}
+<h2>Microbreweries in Northern Michigan</h2>
+@{Html.BeginForm("Search", "Movies", FormMethod.Get);}
+<input type="text" name="q" value="" />
+<input type="submit" value="Search" />
+@{Html.EndForm();}
+&nbsp;
+
+<table class="table">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Title, "Details", new { id = item.ID }) <br />
+                @Html.DisplayFor(modelItem => item.Category) <br />
+                @Html.ActionLink("Reviews", "ListOfReviewsByMovie", "Reviews", new { id = item.ID }, null)
+            </td>
+        </tr>
+    }
+</table>

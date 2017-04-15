@@ -14,6 +14,21 @@ namespace briggs_Reviews.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        public ActionResult ListMovies()
+        {
+            return View(db.Movies.ToList());
+        }
+
+
+        public ActionResult Search(string q)
+        {
+            var movies = db.Movies
+                .Where(a => a.Title.Contains(q))
+                .ToList();
+
+            return View(movies);
+        }
+
         // GET: Movies
         public ActionResult Index()
         {

@@ -14,6 +14,18 @@ namespace briggs_Reviews.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+        public ActionResult ListOfReviewsByMovie(int ID)
+        {
+            var movieReviews = db.Reviews
+            .Where(a => a.ID == ID).ToList();
+
+            var movie = db.Movies.Find(ID);
+            ViewBag.MovieTitle = movie.Title;
+
+
+            return View(movieReviews);
+        }
         // GET: Reviews
         public ActionResult Index()
         {
@@ -46,13 +58,13 @@ namespace briggs_Reviews.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Content,MovieTitle,Rating")] Review review)
+        public ActionResult Create(Review review)
         {
             if (ModelState.IsValid)
             {
                 db.Reviews.Add(review);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("ListOfReviewsByMovie", new { id = review.ID });
             }
 
             return View(review);
@@ -120,7 +132,7 @@ namespace briggs_Reviews.Controllers
             if (disposing)
             {
                 db.Dispose();
-            }
+            } 
             base.Dispose(disposing);
         }
     }
