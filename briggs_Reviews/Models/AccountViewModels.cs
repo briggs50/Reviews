@@ -204,4 +204,16 @@ namespace briggs_Reviews.Models
         public string ConfirmPassword { get; set; }
 
     }
+
+    public class RoleViewModel
+    {
+        public RoleViewModel() { }
+
+        [Key]
+        public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Role Name")]
+        public string Name { get; set; }
+    }
 }

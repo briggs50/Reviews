@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using briggs_Reviews.Models;
+using System.Web.Security;
+using briggs_Reviews.CustomAttribute;
 
 namespace briggs_Reviews.Controllers
 {
@@ -51,6 +53,7 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Movies/Create
+        [AuthorizeOrRedirectAttribute(Roles = "Site Admin")]
         public ActionResult Create()
         {
             return View();

@@ -119,8 +119,7 @@ namespace briggs_Reviews.Controllers
             if (!string.IsNullOrWhiteSpace(userName))
             {
                 List<string> userRoles;
-                //List<string> roles;
-                //List<string> users;
+
                 using (var context = new ApplicationDbContext())
                 {
                     var roleStore = new RoleStore<IdentityRole>(context);
@@ -143,8 +142,7 @@ namespace briggs_Reviews.Controllers
                                  select r.Name).ToList();
                 }
 
-                //ViewBag.Roles = new SelectList(roles);
-                //ViewBag.Users = new SelectList(users);
+
                 ViewBag.UserName = userName;
                 ViewBag.RolesForThisUser = userRoles;
             }
