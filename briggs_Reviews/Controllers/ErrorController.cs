@@ -8,10 +8,12 @@ namespace briggs_Reviews.Controllers
 {
     public class ErrorController : Controller
     {
+       
         public ActionResult Index()
         {
             return RedirectToAction("AccessDenied");
         }
+
 
         public ActionResult AccessDenied()
         {

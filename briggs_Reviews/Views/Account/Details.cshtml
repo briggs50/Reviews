@@ -50,9 +50,32 @@
             @Html.DisplayFor(model => model.ConfirmPassword)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FaveMovie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FaveMovie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.UserName }) |
+    @Html.ActionLink("Edit", "Edit", new { userName = Model.UserName }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

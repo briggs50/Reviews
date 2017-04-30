@@ -51,14 +51,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MoviePoster)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoviePoster)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Rating)
         </dt>
 
@@ -69,6 +61,16 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+
+
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID })
+
+    }
+
+
+
+    @Html.ActionLink("Back to List", "ListMovies")
+
 </p>

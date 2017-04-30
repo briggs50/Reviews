@@ -1,4 +1,5 @@
-﻿using System;
+﻿using briggs_Reviews.CustomAttribute;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,7 @@ namespace briggs_Reviews.Controllers
 {
     public class HomeController : Controller
     {
+      
         public ActionResult Index()
         {
             return View();
@@ -27,6 +29,7 @@ namespace briggs_Reviews.Controllers
             return View();
         }
 
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Admin()
         {
             ViewBag.Message = "Your admin page.";

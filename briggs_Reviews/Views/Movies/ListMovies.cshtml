@@ -1,13 +1,22 @@
 ﻿@model IEnumerable<briggs_Reviews.Models.Movie>
 @{
-    ViewBag.Title = "ListMoves";
+    ViewBag.Title = "ListMovies";
 }
-<h2>Microbreweries in Northern Michigan</h2>
+<h2>Movies-R-Us</h2>
 @{Html.BeginForm("Search", "Movies", FormMethod.Get);}
 <input type="text" name="q" value="" />
 <input type="submit" value="Search" />
 @{Html.EndForm();}
 &nbsp;
+
+@*<div class="form-group">
+    @Html.Label("Filter by Category", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.DropDownList("categoryFilter",
+                 new SelectList(@ViewBag.Categories),
+                 "Categories",
+                 new { @class = "form-control" })
+</div>*@
+
 
 <table class="table">
     @foreach (var item in Model)

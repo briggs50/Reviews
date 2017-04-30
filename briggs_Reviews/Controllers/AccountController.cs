@@ -23,6 +23,7 @@ namespace briggs_Reviews.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -153,11 +154,11 @@ namespace briggs_Reviews.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register([Bind(Include = "UserName, LastName, FirstName, Email, Password, ConfirmPassword, Age, FaveMovie, ZipCode")] RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Age = model.Age, FirstName = model.FirstName, LastName = model.LastName, FaveMovie = model.FaveMovie, ZipCode = model.ZipCode };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -204,7 +205,7 @@ namespace briggs_Reviews.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<ActionResult> ForgotPassword([Bind(Include = "Email")] ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -230,6 +231,7 @@ namespace briggs_Reviews.Controllers
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -238,6 +240,7 @@ namespace briggs_Reviews.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
@@ -248,7 +251,7 @@ namespace briggs_Reviews.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword([Bind(Include = "Email, Password, ConfirmPassword")] ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -272,6 +275,7 @@ namespace briggs_Reviews.Controllers
         //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -291,6 +295,7 @@ namespace briggs_Reviews.Controllers
         //
         // GET: /Account/SendCode
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
             var userId = await SignInManager.GetVerifiedUserIdAsync();
@@ -489,7 +494,8 @@ namespace briggs_Reviews.Controllers
         }
         #endregion
 
-        [AuthorizeOrRedirectAttribute(Roles = "Site Admin")]
+
+
         public ActionResult Index()
         {
             var db = new ApplicationDbContext();
@@ -520,6 +526,7 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Users/Create
+
         public ActionResult Create()
         {
             return View();
@@ -530,7 +537,7 @@ namespace briggs_Reviews.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RegisterViewModel model)
+        public async Task<ActionResult> Create([Bind(Include = "UserName, LastName, FirstName, Email, Password, ConfirmPassword, Age, FaveMovie, ZipCode")] RegisterViewModel model)
         {
 
             if (ModelState.IsValid)
@@ -540,13 +547,16 @@ namespace briggs_Reviews.Controllers
                     UserName = model.Email,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Email = model.Email
+                    Email = model.Email,
+                    FaveMovie = model.FaveMovie,
+                    Age = model.Age,
+                    ZipCode = model.ZipCode
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "User");
+                    UserManager.AddToRole(user.Id, "Reviewer");
 
                     return RedirectToAction("Index", "Account");
 
@@ -578,7 +588,7 @@ namespace briggs_Reviews.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Email, Password, ConfirmPassword")] EditUserViewModel userModel)
+        public ActionResult Edit([Bind(Include = "UserName, LastName, FirstName, Email, Password, ConfirmPassword, Age, FaveMovie, ZipCode")] EditUserViewModel userModel)
         {
             if (ModelState.IsValid)
             {
@@ -588,6 +598,9 @@ namespace briggs_Reviews.Controllers
                 user.FirstName = userModel.FirstName;
                 user.LastName = userModel.LastName;
                 user.Email = userModel.Email;
+                user.Age = userModel.Age;
+                user.FaveMovie = userModel.FaveMovie;
+                user.ZipCode = userModel.ZipCode;
 
                 PasswordHasher ph = new PasswordHasher();
                 user.PasswordHash = ph.HashPassword(userModel.Password);
@@ -599,6 +612,7 @@ namespace briggs_Reviews.Controllers
 
             return View(userModel);
         }
+
 
         public ActionResult Delete(string userName = null)
         {
@@ -624,6 +638,7 @@ namespace briggs_Reviews.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
         public ActionResult DeleteRoleForUser(string userName = null, string roleName = null)
         {
@@ -668,6 +683,7 @@ namespace briggs_Reviews.Controllers
             }
         }
 
+ 
         public ActionResult AddRoleToUser(string userName = null)
         {
             List<string> roles;
@@ -688,7 +704,6 @@ namespace briggs_Reviews.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public ActionResult AddRoleToUser(string roleName, string userName)
         {
             List<string> roles;
@@ -735,9 +750,58 @@ namespace briggs_Reviews.Controllers
                     ViewBag.UserName = userName;
                     ViewBag.RolesForUser = userRoles;
 
-                    return View("ViewUsersRoles");
+                    return View("ViewUserRoles");
                 }
             }
         }
+
+
+        public ActionResult ViewUserRoles(string userName = null)
+        {
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                List<string> userRoles;
+
+                using (var context = new ApplicationDbContext())
+                {
+                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    //roles = (from r in roleManager.Roles select r.Name).ToList();
+
+                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+
+                    //users = (from u in userManager.Users select u.UserName).ToList();
+
+                    var user = userManager.FindByName(userName);
+                    if (user == null)
+                        throw new Exception("User not found!");
+
+                    var userRoleIds = (from r in user.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+                }
+
+
+                ViewBag.UserName = userName;
+                ViewBag.RolesForUser = userRoles;
+            }
+            return View();
+        }
+
+
+        public ActionResult Search(string q)
+        {
+            var users = db.Users
+                .Where(a => a.LastName.Contains(q))
+                .ToList();
+
+            return View(users);
+        }
+
+
+
     }
 }

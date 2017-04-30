@@ -207,8 +207,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704241815056_Movies.cs" />
+    <Compile Include="Migrations\201704241815056_Movies.Designer.cs">
+      <DependentUpon>201704241815056_Movies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704250432504_AspNetUsers.cs" />
+    <Compile Include="Migrations\201704250432504_AspNetUsers.Designer.cs">
+      <DependentUpon>201704250432504_AspNetUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704300202097_Validation.cs" />
+    <Compile Include="Migrations\201704300202097_Validation.Designer.cs">
+      <DependentUpon>201704300202097_Validation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Movie.cs" />
@@ -226,10 +239,15 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\americansniper150x223.jpg" />
+    <Content Include="Images\cinema.jpg" />
     <Content Include="Images\hiddenfigures150x286.jpg" />
+    <Content Include="Images\snackbar.jpg" />
+    <Content Include="Images\snacks.jpg" />
     <Content Include="Images\tenthings150x225.jpg" />
+    <Content Include="Images\theater.jpg" />
     <Content Include="Images\thelittlemermaid150x218.jpg" />
     <Content Include="Images\theprincessbride150x225.jpg" />
+    <Content Include="Images\this-week-at-the-movies.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -307,12 +325,15 @@
     <Content Include="Views\IdentityRoles\Create.cshtml" />
     <Content Include="Views\IdentityRoles\Edit.cshtml" />
     <Content Include="Views\IdentityRoles\Delete.cshtml" />
-    <Content Include="Views\IdentityRoles\ViewUserRoles.cshtml" />
+    <Content Include="Views\Account\ViewUserRoles.cshtml" />
     <Content Include="Views\Account\AddRoleToUser.cshtml" />
+    <Content Include="Views\Error\AccessDenied.cshtml" />
+    <Content Include="Views\Movies\Search.cshtml" />
+    <Content Include="Views\Account\Search.cshtml" />
+    <Content Include="Views\Reviews\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -323,6 +344,17 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201704241815056_Movies.resx">
+      <DependentUpon>201704241815056_Movies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704250432504_AspNetUsers.resx">
+      <DependentUpon>201704250432504_AspNetUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704300202097_Validation.resx">
+      <DependentUpon>201704300202097_Validation.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

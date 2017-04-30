@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using briggs_Reviews.Models;
 using System.Web.Security;
 using briggs_Reviews.CustomAttribute;
+using System.Web.ModelBinding;
 
 namespace briggs_Reviews.Controllers
 {
@@ -22,6 +23,7 @@ namespace briggs_Reviews.Controllers
         }
 
 
+
         public ActionResult Search(string q)
         {
             var movies = db.Movies
@@ -32,12 +34,15 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Movies
+        [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewer")]
         public ActionResult Index()
         {
             return View(db.Movies.ToList());
         }
 
         // GET: Movies/Details/5
+
+        [ValidateAntiForgeryToken]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -53,7 +58,8 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Movies/Create
-        [AuthorizeOrRedirectAttribute(Roles = "Site Admin")]
+
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -64,7 +70,8 @@ namespace briggs_Reviews.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Year,Category,LeadingActor,Director,MoviePoster,Rating")] Movie movie)
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Create([Bind(Include = "ID,Title,Year,Category,LeadingActor,Director,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -77,6 +84,7 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Movies/Edit/5
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,7 +104,8 @@ namespace briggs_Reviews.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Year,Category,LeadingActor,Director,MoviePoster,Rating")] Movie movie)
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "ID,Title,Year,Category,LeadingActor,Director,Rating")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -108,6 +117,7 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Movies/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,6 +135,7 @@ namespace briggs_Reviews.Controllers
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Movie movie = db.Movies.Find(id);
@@ -141,5 +152,34 @@ namespace briggs_Reviews.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public ActionResult Index(string categoryFilter)
+        {
+            Category categoryChoice;
+            Enum.TryParse<Category>(categoryFilter, out categoryChoice);
+
+            ViewBag.Category = ListofCategories();
+
+            IEnumerable<Movie> movies = null;
+
+
+            if (categoryFilter != null)
+            {
+                movies = db.Movies.Where(movie => movie.Category.ToString() == categoryFilter);
+            }
+
+            return View(movies);
+        }
+
+        [NonAction]
+        private IEnumerable<Category> ListofCategories()
+        {
+
+            var categories = db.Movies.Select(movie => movie.Category).Distinct().OrderBy(x => x);
+
+            return categories;
+        }
+
     }
 }

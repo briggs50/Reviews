@@ -21,7 +21,7 @@ namespace briggs_Reviews.Migrations
                      ID = 1,
                      Title = "American Sniper",
                      Year = 2014,
-                     Category = "Action",
+                     Category = Category.Action,
                      LeadingActor = "Bradley Cooper",
                      Director = "Clint Eastwood",
                      Rating = MovieRating.D
@@ -32,7 +32,7 @@ namespace briggs_Reviews.Migrations
                       ID = 2,
                       Title = "The Princess Bride",
                       Year = 1987,
-                      Category = "Fantasy",
+                      Category = Category.Fantasy,
                       LeadingActor = "Cary Elwes",
                       Director = "Rob Reiner",
                       Rating = MovieRating.C,
@@ -42,7 +42,7 @@ namespace briggs_Reviews.Migrations
                       ID = 3,
                       Title = "10 Things I Hate About You",
                       Year = 1999,
-                      Category = "Comedy",
+                      Category = Category.Comedy,
                       LeadingActor = "Heath Ledger",
                       Director = "Gil Junger",
                       Rating = MovieRating.A
@@ -52,7 +52,7 @@ namespace briggs_Reviews.Migrations
                       ID = 4,
                       Title = "The Little Mermaid",
                       Year = 1989,
-                      Category = "Animation",
+                      Category = Category.Animation,
                       LeadingActor = "Jodi Benson",
                       Director = "Ron Clements",
                       Rating = MovieRating.B
@@ -63,7 +63,7 @@ namespace briggs_Reviews.Migrations
                        ID = 5,
                        Title = "Hidden Figures",
                        Year = 2016,
-                       Category = "Biography",
+                       Category = Category.Biography,
                        LeadingActor = "Teraji P. Henson",
                        Director = "Theodore Melfi",
                        Rating = MovieRating.A

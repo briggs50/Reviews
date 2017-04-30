@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using briggs_Reviews.Models;
+using briggs_Reviews.CustomAttribute;
 
 namespace briggs_Reviews.Controllers
 {
@@ -14,7 +15,7 @@ namespace briggs_Reviews.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
+        [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewers")]
         public ActionResult ListOfReviewsByMovie(int ID)
         {
             var movieReviews = db.Reviews
@@ -33,6 +34,7 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Reviews/Details/5
+        [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewer")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -58,26 +60,30 @@ namespace briggs_Reviews.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Review review)
+        [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewer")]
+
+        public ActionResult Create([Bind(Include = "DateCreated,Content,Rating,ID")] Review review)
         {
+
             if (ModelState.IsValid)
             {
                 db.Reviews.Add(review);
                 db.SaveChanges();
-                return RedirectToAction("ListOfReviewsByMovie", new { id = review.ID });
+                return RedirectToAction("ListOfReviewsByMovie");
             }
 
             return View(review);
         }
 
         // GET: Reviews/Edit/5
-        public ActionResult Edit(int? id)
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Edit(int? ID)
         {
-            if (id == null)
+            if (ID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
+            Review review = db.Reviews.Find(ID);
             if (review == null)
             {
                 return HttpNotFound();
@@ -90,7 +96,8 @@ namespace briggs_Reviews.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Content,MovieTitle,Rating")] Review review)
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "ID,Content,DateCreated,Rating")] Review review)
         {
             if (ModelState.IsValid)
             {
@@ -102,6 +109,7 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Reviews/Delete/5
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -119,6 +127,7 @@ namespace briggs_Reviews.Controllers
         // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Review review = db.Reviews.Find(id);
@@ -126,6 +135,17 @@ namespace briggs_Reviews.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult Search(string q)
+        {
+            var reviews = db.Reviews
+                .Where(a => a.Content.Contains(q))
+                .ToList();
+
+            return View(reviews);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {
