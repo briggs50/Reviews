@@ -7,13 +7,13 @@ namespace briggs_Reviews.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AspNetUsers : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AspNetUsers));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201704250432504_AspNetUsers"; }
+            get { return "201705010015457_init"; }
         }
         
         string IMigrationMetadata.Source

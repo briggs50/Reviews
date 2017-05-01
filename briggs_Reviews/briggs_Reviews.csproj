@@ -207,17 +207,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201704241815056_Movies.cs" />
-    <Compile Include="Migrations\201704241815056_Movies.Designer.cs">
-      <DependentUpon>201704241815056_Movies.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704250432504_AspNetUsers.cs" />
-    <Compile Include="Migrations\201704250432504_AspNetUsers.Designer.cs">
-      <DependentUpon>201704250432504_AspNetUsers.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201704300202097_Validation.cs" />
-    <Compile Include="Migrations\201704300202097_Validation.Designer.cs">
-      <DependentUpon>201704300202097_Validation.cs</DependentUpon>
+    <Compile Include="Migrations\201705010015457_init.cs" />
+    <Compile Include="Migrations\201705010015457_init.Designer.cs">
+      <DependentUpon>201705010015457_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -239,12 +231,13 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\americansniper150x223.jpg" />
-    <Content Include="Images\cinema.jpg" />
     <Content Include="Images\hiddenfigures150x286.jpg" />
-    <Content Include="Images\snackbar.jpg" />
-    <Content Include="Images\snacks.jpg" />
+    <Content Include="Images\MovieTheaterSnacks1000x606.jpg" />
+    <Content Include="Images\Popcorn350x495.png" />
+    <Content Include="Images\SnackBar1024x750.jpg" />
     <Content Include="Images\tenthings150x225.jpg" />
-    <Content Include="Images\theater.jpg" />
+    <Content Include="Images\Theater1920x1080.png" />
+    <Content Include="Images\TheaterSeats1400x931.jpg" />
     <Content Include="Images\thelittlemermaid150x218.jpg" />
     <Content Include="Images\theprincessbride150x225.jpg" />
     <Content Include="Images\this-week-at-the-movies.gif" />
@@ -346,14 +339,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201704241815056_Movies.resx">
-      <DependentUpon>201704241815056_Movies.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704250432504_AspNetUsers.resx">
-      <DependentUpon>201704250432504_AspNetUsers.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201704300202097_Validation.resx">
-      <DependentUpon>201704300202097_Validation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705010015457_init.resx">
+      <DependentUpon>201705010015457_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

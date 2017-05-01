@@ -18,11 +18,12 @@
             <td>
                 @Html.DisplayFor(modelItem => review.Rating)
             </td>
+            
         </tr>
     }
 </table>
 
 
-@Html.ActionLink("Add a Review", "Create", "Reviews", new { id = ViewBag.ID }, null)
+@Html.ActionLink("Add a Review", "Create", "Reviews", new { ID = ViewBag.MovieID }, null)
 @Html.ActionLink("Return to move list", "ListMovies", "Movies")
 

@@ -15,7 +15,7 @@ namespace briggs_Reviews.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewers")]
+        [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewer")]
         public ActionResult ListOfReviewsByMovie(int ID)
         {
             var movieReviews = db.Reviews
@@ -62,14 +62,27 @@ namespace briggs_Reviews.Controllers
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewer")]
 
-        public ActionResult Create([Bind(Include = "DateCreated,Content,Rating,ID")] Review review)
+        public ActionResult Create([Bind(Include = "DateCreated,Content,Rating,ID")] Review review, int ID)
         {
+            var movie = db.Movies.Find(ID);
+
+            ViewBag.MovieID = movie.ID;
 
             if (ModelState.IsValid)
             {
-                db.Reviews.Add(review);
-                db.SaveChanges();
-                return RedirectToAction("ListOfReviewsByMovie");
+                if (User.IsInRole("Admin"))
+                {
+                    db.Reviews.Add(review);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else if (User.IsInRole("Reviewer"))
+                {
+                    db.Reviews.Add(review);
+                    db.SaveChanges();
+                    return RedirectToAction("ListMovies");
+                }
+
             }
 
             return View(review);
@@ -152,7 +165,7 @@ namespace briggs_Reviews.Controllers
             if (disposing)
             {
                 db.Dispose();
-            } 
+            }
             base.Dispose(disposing);
         }
     }
