@@ -41,8 +41,7 @@ namespace briggs_Reviews.Controllers
         }
 
         // GET: Movies/Details/5
-
-        [ValidateAntiForgeryToken]
+        
         public ActionResult Details(int? id)
         {
             if (id == null)

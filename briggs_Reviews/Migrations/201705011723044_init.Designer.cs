@@ -13,12 +13,12 @@ namespace briggs_Reviews.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201705010015457_init"; }
+            get { return "201705011723044_init"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target

@@ -9,6 +9,7 @@ namespace briggs_Reviews.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+        public string UserName { get; internal set; }
     }
 
     public class ExternalLoginListViewModel
@@ -65,6 +66,11 @@ namespace briggs_Reviews.Models
 
     public class RegisterViewModel
     {
+        [Key]
+        [Required(ErrorMessage = "A username is required")]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]
         [Display(Name = "Email")]

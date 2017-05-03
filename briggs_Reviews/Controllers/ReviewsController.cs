@@ -62,26 +62,15 @@ namespace briggs_Reviews.Controllers
         [ValidateAntiForgeryToken]
         [AuthorizeOrRedirectAttribute(Roles = "Admin, Reviewer")]
 
-        public ActionResult Create([Bind(Include = "DateCreated,Content,Rating,ID")] Review review, int ID)
+        public ActionResult Create([Bind(Include = "DateCreated,Content,Rating,ID")] Review review)
         {
-            var movie = db.Movies.Find(ID);
 
-            ViewBag.MovieID = movie.ID;
 
             if (ModelState.IsValid)
             {
-                if (User.IsInRole("Admin"))
-                {
                     db.Reviews.Add(review);
                     db.SaveChanges();
                     return RedirectToAction("Index");
-                }
-                else if (User.IsInRole("Reviewer"))
-                {
-                    db.Reviews.Add(review);
-                    db.SaveChanges();
-                    return RedirectToAction("ListMovies");
-                }
 
             }
 

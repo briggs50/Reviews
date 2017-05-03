@@ -18,7 +18,6 @@ namespace briggs_Reviews.Models
 
         [Required(ErrorMessage = "Release date is required")]
         [Display(Name = "ReleaseDate")]
-        [DataType(DataType.Date)]
         public int Year { get; set; }
 
         [Required(ErrorMessage = "Leading actor is required")]
